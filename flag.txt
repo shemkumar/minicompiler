@@ -1,0 +1,2 @@
+r00t@locahost{mini_compiler_pwn}
+
