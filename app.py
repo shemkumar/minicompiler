@@ -17,64 +17,104 @@ def index():
         <title>Mini Compiler</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
-                background: linear-gradient(135deg, #2c3e50, #3498db);
-                color: #ecf0f1;
+                font-family: 'Courier New', monospace;
+                background: #111;
+                color: #00ff00;
                 margin: 0;
                 padding: 0;
             }
+
             .container {
                 width: 80%;
-                max-width: 800px;
+                max-width: 900px;
                 margin: 50px auto;
-                background: rgba(44, 62, 80, 0.9);
-                padding: 20px;
+                background: rgba(0, 0, 0, 0.8);
+                padding: 40px;
                 border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+                text-align: center;
+                animation: glow 1.5s ease-in-out infinite alternate;
             }
+
             h1 {
-                text-align: center;
+                font-size: 2.5em;
+                color: #ff6347;
                 margin-bottom: 20px;
-                font-size: 2em;
-                color: #1abc9c;
+                text-shadow: 0 0 5px #ff6347, 0 0 10px #ff6347;
             }
+
             p {
-                text-align: center;
-                font-size: 1.1em;
+                font-size: 1.2em;
+                color: #7fff00;
+                margin-bottom: 20px;
+                line-height: 1.5;
             }
+
             textarea {
                 width: 100%;
-                padding: 10px;
-                margin-top: 10px;
-                border: none;
-                border-radius: 5px;
-                font-family: monospace;
-                font-size: 1em;
-            }
-            button {
-                display: block;
-                width: 100%;
-                padding: 10px;
-                background: #1abc9c;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
+                height: 200px;
+                padding: 15px;
+                background: #222;
+                color: #00ff00;
+                border: 2px solid #00ff00;
+                border-radius: 8px;
                 font-size: 1.2em;
-                cursor: pointer;
+                font-family: 'Courier New', monospace;
+                margin-top: 20px;
+                transition: 0.3s ease-in-out;
             }
+
+            textarea:focus {
+                background: #333;
+                outline: none;
+                box-shadow: 0 0 10px #00ff00;
+            }
+
+            button {
+                display: inline-block;
+                width: 100%;
+                padding: 12px;
+                background: #00ff00;
+                color: #111;
+                border: none;
+                border-radius: 5px;
+                font-size: 1.4em;
+                cursor: pointer;
+                margin-top: 20px;
+                transition: background 0.3s ease-in-out;
+            }
+
             button:hover {
-                background: #16a085;
+                background: #32cd32;
+            }
+
+            footer {
+                margin-top: 40px;
+                font-size: 1.2em;
+                color: #7fff00;
+            }
+
+            @keyframes glow {
+                0% {
+                    box-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+                }
+                100% {
+                    box-shadow: 0 0 20px #ff6347, 0 0 40px #ff6347;
+                }
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>Welcome to Mini Compiler</h1>
-            <p>This tool allows you to submit Python code and see its output. Be creative, but play fair!</p>
+            <h1>Mini Compiler - Fun with Python</h1>
+            <p>Welcome to the Mini Compiler! Write your Python code, and we'll execute it for you. Play fair, but don't forget to have fun!</p>
             <form action="/compile" method="post">
-                <textarea name="code" rows="10" cols="50" placeholder="Write your Python code here..."></textarea><br>
+                <textarea name="code" placeholder="Write your Python code here..."></textarea><br>
                 <button type="submit">Compile & Run</button>
             </form>
+            <footer>
+                <p>Mini Compiler Challenge - 2024 | CTF{mini_compiler_pwn}</p>
+            </footer>
         </div>
     </body>
     </html>
@@ -101,5 +141,4 @@ def compile_code():
     return f"<pre>{result}</pre>"
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
-
+    app.run(debug=True, host='0.0.0.0')
