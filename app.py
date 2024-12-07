@@ -4,8 +4,6 @@ import os
 
 app = Flask(__name__)
 
-FLAG = "CTF{mini_compiler_pwn}"
-
 @app.route('/')
 def index():
     return render_template_string('''
@@ -113,7 +111,7 @@ def index():
                 <button type="submit">Compile & Run</button>
             </form>
             <footer>
-                <p>Mini Compiler Challenge - 2024 | CTF{mini_compiler_pwn}</p>
+                <p>Mini Compiler Challenge - 2024 | Developed By r00t@localhost Team </p>
             </footer>
         </div>
     </body>
