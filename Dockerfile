@@ -1,12 +1,18 @@
 FROM python:3.10-slim
 
 WORKDIR /comp
-COPY app.py /comp/
-COPY flag.txt flag.txt
-COPY codingforgetjob12lpa.txt codingforgetjob12lpa.txt
 
+# Copy all files into /comp
+COPY app.py .
+COPY flag.txt .
+COPY codingforgetjob12lpa.txt .
+
+# Install Flask
 RUN pip install flask
 
-EXPOSE 5000
-CMD ["python3", "app.py"]
+# Optional: Just to verify contents during build (for debugging)
+# RUN ls -la /comp
 
+EXPOSE 5000
+
+CMD ["python3", "app.py"]
