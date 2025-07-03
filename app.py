@@ -105,13 +105,13 @@ def index():
     <body>
         <div class="container">
             <h1>Mini Compiler - Fun with Python</h1>
-            <p>Welcome to the Mini Compiler! Write your Python code, and we'll execute it for you. Play fair, but don't forget to have fun!</p>
+            <p>Hack Our Compiler Get the Job Offer!</p>
             <form action="/compile" method="post">
                 <textarea name="code" placeholder="Write your Python code here..."></textarea><br>
                 <button type="submit">Compile & Run</button>
             </form>
             <footer>
-                <p>Mini Compiler Challenge - 2024 | Developed By r00t@localhost Team </p>
+                <p>Mini Compiler Challenge - 2024 | Developed By Sam </p>
             </footer>
         </div>
     </body>
