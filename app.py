@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template_string
 import subprocess
 import os
+import uuid
 
 app = Flask(__name__)
 
@@ -122,19 +123,26 @@ def index():
 def compile_code():
     code = request.form.get('code', '')
 
-    # Save code to a temporary file
-    temp_file = 'temp_code.py'
+    # Generate a unique filename for the temporary file
+    temp_file = f'temp_code_{uuid.uuid4().hex}.py'
     with open(temp_file, 'w') as f:
         f.write(code)
 
-    try:
-        # Dangerous: Executes the user's code directly
-        result = subprocess.check_output(['python3', temp_file], stderr=subprocess.STDOUT, text=True)
-    except subprocess.CalledProcessError as e:
-        result = f"Error: {e.output}"
+    result = "Execution of user-provided code is disabled for security reasons."
+    # The original code allowed arbitrary code execution, which is a critical security vulnerability.
+    # For demonstration purposes, direct execution is disabled. In a real-world scenario,
+    # if code execution is absolutely necessary, it must be done in a highly isolated and sandboxed environment.
+    # For example, using a containerization technology (like Docker) with strict resource limits and network isolation,
+    # or a dedicated, secure code execution service.
+    # try:
+    #     # Dangerous: Executes the user's code directly
+    #     result = subprocess.check_output(['python3', temp_file], stderr=subprocess.STDOUT, text=True)
+    # except subprocess.CalledProcessError as e:
+    #     result = f"Error: {e.output}"
     finally:
         # Clean up the temporary file
-        os.remove(temp_file)
+        if os.path.exists(temp_file):
+            os.remove(temp_file)
 
     return f"<pre>{result}</pre>"
 
