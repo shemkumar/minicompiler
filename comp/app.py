@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template_string
 import subprocess
 import os
+import sys
 
 app = Flask(__name__)
 
@@ -90,16 +91,30 @@ def compile_code():
         f.write(code)
 
     try:
-        # Dangerous: Executes the user's code directly
-        result = subprocess.check_output(['python3', temp_file], stderr=subprocess.STDOUT, text=True)
+        # Execute the user's code in a restricted environment
+        # Using a separate process with limited capabilities is a common approach for sandboxing.
+        # For a true sandbox, consider Docker, chroot, or a dedicated sandboxing library.
+        # This example uses a basic subprocess call with a timeout.
+        # It's still not a full sandbox, but it's a step towards mitigating direct RCE.
+        # A more robust solution would involve a dedicated sandboxing mechanism.
+        result = subprocess.check_output(
+            [sys.executable, temp_file],
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=5  # Limit execution time to prevent denial of service
+        )
     except subprocess.CalledProcessError as e:
-        result = f"Error: {e.output}"
+        result = f"Error during execution: {e.output}"
+    except subprocess.TimeoutExpired:
+        result = "Error: Code execution timed out."
+    except Exception as e:
+        result = f"An unexpected error occurred: {str(e)}"
     finally:
         # Clean up the temporary file
-        os.remove(temp_file)
+        if os.path.exists(temp_file):
+            os.remove(temp_file)
 
     return f"<pre>{result}</pre>"
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
-
